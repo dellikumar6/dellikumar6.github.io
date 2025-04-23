@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Developer Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --code-bg: #2b2b2b;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            height: 90vh;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        button, .btn {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        button:hover, .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0 4rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .skills {
+            flex: 1;
+            min-width: 300px;
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .projects {
+            padding: 2rem 0 4rem;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-color: var(--code-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .project-description {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .contact {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        .email-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.25rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .email-link:hover {
+            color: var(--primary);
+        }
+        
+        .footer {
+            background-color: black;
+            color: #6c757d;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Code section styling */
+        .code-section {
+            background-color: var(--code-bg);
+            color: white;
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .code-block {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .code-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot-red { background-color: #ff5f56; }
+        .dot-yellow { background-color: #ffbd2e; }
+        .dot-green { background-color: #27c93f; }
+        
+        .code-title {
+            margin-left: 1rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .code-content {
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        
+        .line { display: block; }
+        .keyword { color: #c678dd; }
+        .type { color: #e5c07b; }
+        .string { color: #98c379; }
+        .number { color: #d19a66; }
+        .comment { color: #7f848e; }
+        .annotation { color: #e06c75; }
+        
+        /* Floating elements animation */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        /* Media queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-buttons button, .hero-buttons .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="floating-element" style="width: 300px; height: 300px; top: -100px; right: -50px;"></div>
+        <div class="floating-element" style="width: 200px; height: 200px; bottom: -50px; left: 10%;"></div>
+        <div class="container hero">
+            <h1 class="fade-in">Java Developer</h1>
+            <p class="fade-in">Specializing in Spring Boot, Gradle, and Kafka to build robust enterprise applications.</p>
+            <div class="hero-buttons fade-in">
+                <button id="view-projects">View Projects</button>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <h2 class="section-title fade-in">About Me</h2>
+        <div class="about-content">
+            <div class="about-text fade-in">
+                <p>I'm a passionate Java developer with expertise in building scalable, enterprise-grade applications. With a strong foundation in software engineering principles, I create robust solutions that solve complex problems.</p>
+                <p style="margin-top: 1rem;">My current focus is on mastering Spring Boot, Gradle, and Kafka to develop high-performance, distributed systems. I'm always looking to expand my knowledge and take on new challenges.</p>
+            </div>
+            <div class="skills fade-in">
+                <h3>Technical Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">Spring Boot</span>
+                    <span class="skill-tag">Gradle</span>
+                    <span class="skill-tag">Kafka</span>
+                    <span class="skill-tag">Microservices</span>
+                    <span class="skill-tag">RESTful APIs</span>
+                    <span class="skill-tag">JUnit</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">NoSQL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="code-section">
+        <div class="floating-element" style="width: 150px; height: 150px; top: 20%; left: 5%;"></div>
+        <div class="floating-element" style="width: 100px; height: 100px; bottom: 10%; right: 10%;"></div>
+        <div class="container">
+            <h2 class="section-title fade-in" style="color: white;">Clean Code & Best Practices</h2>
+            <div class="code-container">
+                <div class="code-block fade-in">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="code-title">OrderService.java</div>
+                    </div>
+                    <div class="code-content">
+                        <span class="line"><span class="keyword">package</span> com.portfolio.service;</span>
+                        <span class="line">&nbsp;</span>
+                        <span class="line"><span class="keyword">import</span> org.springframework.kafka.core.KafkaTemplate;</span>
+                        <span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span>
+                        <span class="line"><span class="keyword">import</span> lombok.RequiredArgsConstructor;</span>
+                        <span class="line"><span class="keyword">import</span> com.portfolio.model.Order;</span>
+                        <span class="line"><span class="keyword">import</span> com.portfolio.repository.OrderRepository;</span>
+                        <span class="line">&nbsp;</span>
+                        <span class="line"><span class="annotation">@Service</span></span>
+                        <span class="line"><span class="annotation">@RequiredArgsConstructor</span></span>
+                        <span class="line"><span class="keyword">public class</span> <span class="type">OrderService</span> {</span>
+                        <span class="line">&nbsp;</span>
+                        <span class="line">    <span class="keyword">private final</span> OrderRepository orderRepository;</span>
+                        <span class="line">    <span class="keyword">private final</span> KafkaTemplate&lt;String, Order&gt; kafkaTemplate;</span>
+                        <span class="line">&nbsp;</span>
+                        <span class="line">    <span class="comment">// Process new order and publish event to Kafka</span></span>
+                        <span class="line">    <span class="keyword">public</span> Order <span class="type">processOrder</span>(Order order) {</span>
+                        <span class="line">        Order savedOrder = orderRepository.save(order);</span>
+                        <span class="line">        kafkaTemplate.send(<span class="string">"order-events"</span>, savedOrder);</span>
+                        <span class="line">        <span class="keyword">return</span> savedOrder;</span>
+                        <span class="line">    }</span>
+                        <span class="line">}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects container">
+        <h2 class="section-title fade-in">My Projects</h2>
+        <div class="project-grid">
+            <!-- Project 1 -->
+            <div class="project-card fade-in">
+                <div class="project-image">
+                    <div class="tech-badge">Spring Boot</div>
+                    Project Image
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Microservices Platform</h3>
+                    <p class="project-description">A scalable microservices architecture using Spring Boot, with service discovery, API gateway, and circuit breakers.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank">GitHub</a>
+                        <a href="#" target="_blank">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="project-card fade-in">
+                <div class="project-image">
+                    <div class="tech-badge">Kafka</div>
+                    Project Image
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Real-time Data Pipeline</h3>
+                    <p class="project-description">Event-driven architecture using Kafka for processing high-volume data streams with low latency.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank">GitHub</a>
+                        <a href="#" target="_blank">Documentation</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-card fade-in">
+                <div class="project-image">
+                    <div class="tech-badge">Gradle</div>
+                    Project Image
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Build Automation Tool</h3>
+                    <p class="project-description">Custom Gradle plugins for streamlining the build process in enterprise Java applications.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank">GitHub</a>
+                        <a href="#" target="_blank">Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Get In Touch</h2>
+            <div class="social-links">
+                <a href="#" class="social-link fade-in">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="#" class="social-link fade-in">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+                <a href="#" class="social-link fade-in">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                    </svg>
+                </a>
+            </div>
+            <a href="mailto:youremail@example.com" class="email-link fade-in">youremail@example.com</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Java Developer Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Register ScrollTrigger plugin
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Hero animations
+            gsap.to('.fade-in', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: 'power3.out'
+            });
+            
+            // Section title animations
+            gsap.utils.toArray('.section-title').forEach(title => {
+                gsap.to(title, {
+                    scrollTrigger: {
+                        trigger: title,
+                        start: 'top 80%',
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // About section animations
+            gsap.to('.about-text', {
+                scrollTrigger: {
+                    trigger: '.about-content',
+                    start: 'top 75%',
+                },
+                opacity: 1,
+                x: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            gsap.to('.skills', {
+                scrollTrigger: {
+                    trigger: '.about-content',
+                    start: 'top 75%',
+                },
+                opacity: 1,
+                x: 0,
+                duration: 0.8,
+                delay: 0.2,
+                ease: 'power2.out'
+            });
+            
+            // Code block animation
+            gsap.to('.code-block', {
+                scrollTrigger: {
+                    trigger: '.code-section',
+                    start: 'top 60%',
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            // Project card animations
+            gsap.utils.toArray('.project-card').forEach((card, i) => {
+                gsap.to(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Social links animations
+            gsap.utils.toArray('.social-link').forEach((link, i) => {
+                gsap.to(link, {
+                    scrollTrigger: {
+                        trigger: '.social-links',
+                        start: 'top 85%',
+                    },
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.5,
+                    delay: i * 0.1,
+                    ease: 'back.out(1.7)'
+                });
+            });
+            
+            gsap.to('.email-link', {
+                scrollTrigger: {
+                    trigger: '.email-link',
+                    start: 'top 90%',
+                },
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // View projects button
+            document.getElementById('view-projects').addEventListener('click', () => {
+                const projectsSection = document.getElementById('projects');
+                window.scrollTo({
+                    top: projectsSection.offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Floating elements animation
+            gsap.utils.toArray('.floating-element').forEach(element => {
+                gsap.to(element, {
+                    y: "random(-20, 20)",
+                    x: "random(-20, 20)",
+                    duration: "random(3, 6)",
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
